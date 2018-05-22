@@ -82,8 +82,8 @@ stateAbbrev = {
 #Converts Name field to two seperate fields, first name and last name
 def splitName(name):
     first, last = name.split(" ")
-    print(f'First name: {first} | Last Name: {Last}')
-    return first, last
+    print(f'First name: {first} | Last Name: {last}')
+    return (first, last)
 
 #converts YYYY-MM-DD to MM/DD/YYYY 
 def convertDate(date):
@@ -93,7 +93,7 @@ def convertDate(date):
 
 #converts first 5 digits of employee's SSN to *
 def anonymizeSSN(ssn):
-    ssn = snn.split("-")
+    ssn = ssn.split("-")
     newSSN = "***-**-"+ssn[2]
     return newSSN
 
@@ -101,26 +101,34 @@ def anonymizeSSN(ssn):
 # Application Code
 #-----------------------------------------------------------
 
+#create csv file and add headers
+with open(outputFilePath,"w") as output:
+    writer = csv.writer(output)
+    writer.writerow(headers)
 
 #iterate over all the files stored in array, converting columns
 for f in files:
     with open(f, newline="") as csvfile:
         csvreader = csv.reader(csvfile, delimiter=",")
-            for row in csvreader:
-                newRow=[]
-                #if employee ID is not a number, probably header so skip
-                if row[0].isdigit():
-                    newRow[0] = row[0]
-                    #split first and last name then insert last as new element
-                    first, last = splitName(row[1])
-                    newRow[1] = first
-                    newRow[2] = last
-                    #convert date to MM/DD/YYYY format
-                    newRow[3] = convertDate(row[2])
-                    #Anonymize employee SSN
-                    newRow[4] = anonymizeSSN(row[3])
-                    #convert state to abbreviation
-                    newRow[5] = stateAbbrev[row[4]]
-                
+        for row in csvreader:
+            newRow=[]
+            #if employee ID is not a number, probably header so skip
+            if row[0].isdigit():
+                newRow.insert(0,row[0])
+                #split first and last name then insert last as new element
+                first, last = splitName(row[1])
+                newRow.insert(1, first)
+                newRow.insert(2,last)
+                #convert date to MM/DD/YYYY format
+                newRow.insert(3,convertDate(row[2]))
+                #Anonymize employee SSN
+                newRow.insert(4, anonymizeSSN(row[3]))
+                #convert state to abbreviation
+                newRow.insert(5, stateAbbrev[row[4]])
+                #write row to new .csv
+                with open(outputFilePath,"a") as output:
+                    writer = csv.writer(output)
+                    writer.writerow(newRow)
+            
 
 
