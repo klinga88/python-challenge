@@ -1,79 +1,29 @@
 #Andrew Kling
 #UNCC HW3
-#PyBoss - Reads in employee information in a .csv and converts format
-#         of data in columns.  Exports converted data in new csv titled
-#         employee_data_converted.csv
+#PyBank - Reads in multiple .csv files containing monthly revenue data from a bank
+#         Output will be pushed to new Revenue_Data_Summary.csv and terminal
+#         Output contains:
+#         -total count of months
+#         -total revenue
+#         -avg revenue change
+#         -greatest increase in revenue (month-year and value)
+#         -greatest decrease in revenue (month-year and value)
 
 import os
-import csv
-import datetime
+import pandas as pd
 
 #-----------------------------------------------------------
 #Define Variables
 #-----------------------------------------------------------
 
 #setup input and output file paths
-outputFilePath = os.path.join("PyBoss","employee_data_converted.csv")
-inputFilePath1 = os.path.join("PyBoss","raw_data","employee_data1.csv")
-inputFilePath2 = os.path.join("PyBoss","raw_data","employee_data2.csv")
+outputFilePath = os.path.join("PyBank","Revenue_Data_Summary.csv")
+inputFilePath1 = os.path.join("PyBank","raw_data","budget_data_1.csv")
+inputFilePath2 = os.path.join("PyBank","raw_data","budget_data_2.csv")
 files = [inputFilePath1,inputFilePath2]
 
 #create csv with headers to store converted data
 headers = ["Emp ID","First Name","Last Name", "DOB", "SSN", "State"]
-
-#Dictionary of state abbreviations
-stateAbbrev = {
-    'Alabama': 'AL',
-    'Alaska': 'AK',
-    'Arizona': 'AZ',
-    'Arkansas': 'AR',
-    'California': 'CA',
-    'Colorado': 'CO',
-    'Connecticut': 'CT',
-    'Delaware': 'DE',
-    'Florida': 'FL',
-    'Georgia': 'GA',
-    'Hawaii': 'HI',
-    'Idaho': 'ID',
-    'Illinois': 'IL',
-    'Indiana': 'IN',
-    'Iowa': 'IA',
-    'Kansas': 'KS',
-    'Kentucky': 'KY',
-    'Louisiana': 'LA',
-    'Maine': 'ME',
-    'Maryland': 'MD',
-    'Massachusetts': 'MA',
-    'Michigan': 'MI',
-    'Minnesota': 'MN',
-    'Mississippi': 'MS',
-    'Missouri': 'MO',
-    'Montana': 'MT',
-    'Nebraska': 'NE',
-    'Nevada': 'NV',
-    'New Hampshire': 'NH',
-    'New Jersey': 'NJ',
-    'New Mexico': 'NM',
-    'New York': 'NY',
-    'North Carolina': 'NC',
-    'North Dakota': 'ND',
-    'Ohio': 'OH',
-    'Oklahoma': 'OK',
-    'Oregon': 'OR',
-    'Pennsylvania': 'PA',
-    'Rhode Island': 'RI',
-    'South Carolina': 'SC',
-    'South Dakota': 'SD',
-    'Tennessee': 'TN',
-    'Texas': 'TX',
-    'Utah': 'UT',
-    'Vermont': 'VT',
-    'Virginia': 'VA',
-    'Washington': 'WA',
-    'West Virginia': 'WV',
-    'Wisconsin': 'WI',
-    'Wyoming': 'WY',
-}
 
 #-----------------------------------------------------------
 # Function Definitions
@@ -85,17 +35,7 @@ def splitName(name):
     print(f'First name: {first} | Last Name: {last}')
     return (first, last)
 
-#converts YYYY-MM-DD to MM/DD/YYYY 
-def convertDate(date):
-    date = date.split("-")
-    newDate = date[1] + "/" + date[2] + "/" + date[0]
-    return newDate
 
-#converts first 5 digits of employee's SSN to *
-def anonymizeSSN(ssn):
-    ssn = ssn.split("-")
-    newSSN = "***-**-"+ssn[2]
-    return newSSN
 
 #-----------------------------------------------------------
 # Application Code
