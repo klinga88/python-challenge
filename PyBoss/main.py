@@ -82,7 +82,6 @@ stateAbbrev = {
 #Converts Name field to two seperate fields, first name and last name
 def splitName(name):
     first, last = name.split(" ")
-    print(f'First name: {first} | Last Name: {last}')
     return (first, last)
 
 #converts YYYY-MM-DD to MM/DD/YYYY 
