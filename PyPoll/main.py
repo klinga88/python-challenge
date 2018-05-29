@@ -18,9 +18,9 @@ import pandas as pd
 #-----------------------------------------------------------
 
 #setup input and output file paths
-outputFilePath = os.path.join("PyPoll","Election_Results.txt")
-inputFilePath1 = os.path.join("PyPoll","raw_data","election_data_1.csv")
-inputFilePath2 = os.path.join("PyPoll","raw_data","election_data_2.csv")
+outputFilePath = os.path.join("Election_Results.txt")
+inputFilePath1 = os.path.join("raw_data","election_data_1.csv")
+inputFilePath2 = os.path.join("raw_data","election_data_2.csv")
 files = [inputFilePath1,inputFilePath2]
 
 #format floats to display as percentage
@@ -65,7 +65,7 @@ electionData = pd.concat((pd.read_csv(f) for f in files))
 #count all votes to get number of total votes
 totalVotes = electionData["Candidate"].count()
 
-#create dataframe containing candidate names and home many votes each got
+#create dataframe containing candidate names and how many votes each got
 candidateVotes = pd.DataFrame(electionData["Candidate"].value_counts().reset_index())
 candidateVotes = candidateVotes.rename(index=str, columns={"index":"Candidate","Candidate":"Total Votes"})
 
