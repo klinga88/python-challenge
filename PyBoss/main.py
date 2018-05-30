@@ -13,9 +13,15 @@ import datetime
 #-----------------------------------------------------------
 
 #setup input and output file paths
-outputFilePath = os.path.join("employee_data_converted.csv")
-inputFilePath1 = os.path.join("raw_data","employee_data1.csv")
-inputFilePath2 = os.path.join("raw_data","employee_data2.csv")
+# outputFilePath = os.path.join("employee_data_converted.csv")
+# inputFilePath1 = os.path.join("raw_data","employee_data1.csv")
+# inputFilePath2 = os.path.join("raw_data","employee_data2.csv")
+
+outputFilePath = os.path.join("PyBoss","employee_data_converted.csv")
+inputFilePath1 = os.path.join("PyBoss","raw_data","employee_data1.csv")
+inputFilePath2 = os.path.join("PyBoss","raw_data","employee_data2.csv")
+
+
 files = [inputFilePath1,inputFilePath2]
 
 #create csv with headers to store converted data
@@ -100,8 +106,8 @@ def anonymizeSSN(ssn):
 # Application Code
 #-----------------------------------------------------------
 
-#create csv file and add headers
-with open(outputFilePath,"w") as output:
+#create output csv file and add headers
+with open(outputFilePath,"w", newline="") as output:
     writer = csv.writer(output)
     writer.writerow(headers)
 
@@ -125,7 +131,7 @@ for f in files:
                 #convert state to abbreviation
                 newRow.insert(5, stateAbbrev[row[4]])
                 #append converted row to existing csv file
-                with open(outputFilePath,"a") as output:
+                with open(outputFilePath,"a",newline="") as output:
                     writer = csv.writer(output)
                     writer.writerow(newRow)
             
